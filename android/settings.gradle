@@ -1,0 +1,3 @@
+rootProject.name = 'ReactNativeUploadS3'
+
+include ':app'
