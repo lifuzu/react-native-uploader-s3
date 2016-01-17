@@ -59,6 +59,13 @@ Inspired by two projects:
 ... and limitations:
 * support for one file at a time
 
+### Credits
+
+* https://github.com/aroth/react-native-uploader
+* http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
+* https://github.com/tj/node-s3-policy
+* http://stackoverflow.com/questions/18476217/amazon-s3-post-api-and-signing-a-policy-with-nodejs
+
 ## License
 
 MIT
