@@ -100,7 +100,7 @@ class ReactNativeUploadS3 extends React.Component {
     // console.log(p.signature);
 
     let opts = {
-      url: 'https://uploads-testus.s3.amazonaws.com/',
+      url: 'https://' + s3_opts.bucket + '.s3.amazonaws.com/',
       files: files,
       params: {
         key: 'images/${filename}',
