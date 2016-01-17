@@ -16,6 +16,18 @@ var {
 } = React;
 
 var RNUploader = require('NativeModules').RNUploader;
+var s3_policy = require('./s3_policy');
+let s3_opts = {
+  bucket: 'uploads-testus',
+  region: 'us-east-1',
+  key: '<accessKeyId>',
+  secret: '<secretAccessKey>',
+  type: 'image/',
+  path: 'images/',
+  acl: 'public-read',
+  expires: new Date(Date.now() + 60000),
+  length: 10485760, // 10M as maximal size
+};
 
 class ReactNativeUploadS3 extends React.Component {
 
@@ -74,18 +86,34 @@ class ReactNativeUploadS3 extends React.Component {
 
   _uploadImages(){
     let files = this.state.images.map( (f)=>{
+      let uuid = _generateUUID();
       return {
         name: 'file',
-        filename: _generateUUID + '.png',
+        filename: uuid + '.png',
         filepath: f.uri,
         filetype: 'image/png',
       }
     });
 
+    let p = s3_policy(s3_opts);
+    // console.log(p.policy);
+    // console.log(p.signature);
+
     let opts = {
-      url: 'https://posttestserver.com/post.php',
+      url: 'https://uploads-testus.s3.amazonaws.com/',
       files: files,
-      params: { name: 'test-app' }
+      params: {
+        key: 'images/${filename}',
+        acl: s3_opts.acl,
+        'X-Amz-Signature': p.signature,
+        'x-amz-credential': p.credential,
+        'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
+        'X-Amz-Date': p.date + 'T000000Z',
+        'Content-Type': 'image/png',
+        'policy': p.policy,
+        'success_action_status': '201',
+        'x-amz-meta-uuid': '14365123651274'
+      }
     };
 
     this.setState({ uploading: true, showUploadModal: true, });
@@ -192,8 +220,6 @@ class ReactNativeUploadS3 extends React.Component {
       </View>
     );
   }
-
-
 }
 
 function _generateUUID() {
