@@ -17,12 +17,13 @@ var {
 
 // var RNUploader = require('NativeModules').RNUploader;
 var RNUploader = require('./Uploader')
+var xml2json = require('node-xml2json');
 var s3_policy = require('./s3_policy');
 let s3_opts = {
   bucket: 'uploads-testus',
   region: 'us-east-1',
-  key: 'AKIAJPMTDLU5Q4QZEBWQ',
-  secret: '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',
+  key: '<awsAccessKey>',
+  secret: '<awsAccessSecret>',
   type: 'image/',
   path: 'images/',
   acl: 'public-read',
@@ -126,10 +127,10 @@ class ReactNativeUploadS3 extends React.Component {
       }
 
       let status = res.status;
-      let responseString = res.data;
+      let responseJson = xml2json.parser( res.data );
 
       console.log('upload complete with status ' + status);
-      console.log( responseString );
+      console.log( responseJson );
       this.setState( { uploading: false, uploadStatus: status } );
     });
   }

@@ -10,6 +10,7 @@
     "buffer": "^4.3.0",
     "crypto-js": "^3.1.6",
     "lodash": "^4.0.0",
+    "node-xml2json": "^1.0.0",
     "react-native": "^0.17.0",
     "react-native-uploader": "0.0.8"
   }
