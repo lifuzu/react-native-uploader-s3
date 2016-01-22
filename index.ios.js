@@ -15,13 +15,14 @@ var {
   Modal,
 } = React;
 
-var RNUploader = require('NativeModules').RNUploader;
+// var RNUploader = require('NativeModules').RNUploader;
+var RNUploader = require('./Uploader')
 var s3_policy = require('./s3_policy');
 let s3_opts = {
   bucket: 'uploads-testus',
   region: 'us-east-1',
-  key: '<accessKeyId>',
-  secret: '<secretAccessKey>',
+  key: 'AKIAJPMTDLU5Q4QZEBWQ',
+  secret: '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',
   type: 'image/',
   path: 'images/',
   acl: 'public-read',
@@ -120,6 +121,7 @@ class ReactNativeUploadS3 extends React.Component {
     RNUploader.upload( opts, ( err, res )=>{
       if( err ){
           console.log(err);
+          this.setState( { uploading: false, uploadStatus: err } );
           return;
       }
 
@@ -130,7 +132,6 @@ class ReactNativeUploadS3 extends React.Component {
       console.log( responseString );
       this.setState( { uploading: false, uploadStatus: status } );
     });
-
   }
 
   uploadProgressModal(){
