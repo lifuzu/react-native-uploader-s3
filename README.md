@@ -17,7 +17,7 @@ let s3_opts = {
   type: 'image/',
   path: 'images/',
   acl: 'public-read',
-  expires: new Date(Date.now() + 60000),
+  expires: new Date(Date.now() + 60 * 60000),
   length: 10485760, // 10M as maximal size
 };
 ```
